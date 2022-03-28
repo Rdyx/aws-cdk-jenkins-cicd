@@ -5,6 +5,7 @@ def load_conf(branch) {
     sh "ls ${env.WORKSPACE}"
     sh "ls ./"
     echo "${HOME}"
+    echo (readFile('./cdk.json'))
     def config = readJSON(file:'./cdk.json')
     echo "test2"
     // echo readFile('./cdk.json')
