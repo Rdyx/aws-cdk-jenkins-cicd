@@ -1,34 +1,3 @@
-def load_conf(branch) {
-    print("Branch ${branch}")
-    echo (readFile('./cdk.json'))
-    def config=readJSON(file:'./cdk.json')
-    echo "test2"
-    echo "${config}"
-    // echo readFile('./cdk.json')
-    // if (branch=="master"){
-    //         config["context"] = reasJSON(file: './conf/prod_conf.json')
-    // }
-    switch(branch) {
-        case branch = 'develop':
-            config["context"] = reasJSON(file: './conf/dev_conf.json')
-            break
-        case branch = 'master':
-            config["context"] = reasJSON(file: './conf/prod_conf.json')
-            break
-        default:
-            config["context"] = reasJSON(file: './conf/test_conf.json')
-            config["context"]["SUFFIX"] += '-' + env.BRANCH_NAME.split('-')[0].split('/')[1]
-            break
-    }
-
-    // env.SUFFIX = config["context"]["SUFFIX"]
-    // env.AWS_REGION = config["context"]["AWS_REGION"]
-
-    writeJSON(file:'./cdk.json', json:config, pretty: 2)
-    echo (readFile('./cdk.json'))
-}
-
-
 pipeline {
     agent any
 
@@ -109,4 +78,34 @@ pipeline {
             }
         }
     }
+}
+
+def load_conf(branch) {
+    echo "Branch ${branch}"
+    echo readFile('./cdk.json')
+    def config = readJSON(file:'./cdk.json')
+    echo "test2"
+    echo "${config}"
+    // echo readFile('./cdk.json')
+    // if (branch=="master"){
+    //         config["context"] = reasJSON(file: './conf/prod_conf.json')
+    // }
+    switch(branch) {
+        case branch = 'develop':
+            config["context"] = reasJSON(file: './conf/dev_conf.json')
+            break
+        case branch = 'master':
+            config["context"] = reasJSON(file: './conf/prod_conf.json')
+            break
+        default:
+            config["context"] = reasJSON(file: './conf/test_conf.json')
+            config["context"]["SUFFIX"] += '-' + env.BRANCH_NAME.split('-')[0].split('/')[1]
+            break
+    }
+
+    // env.SUFFIX = config["context"]["SUFFIX"]
+    // env.AWS_REGION = config["context"]["AWS_REGION"]
+
+    writeJSON(file:'./cdk.json', json:config, pretty: 2)
+    echo (readFile('./cdk.json'))
 }
