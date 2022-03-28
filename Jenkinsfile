@@ -6,9 +6,8 @@ def load_conf(branch) {
     sh "ls ./"
     echo "${HOME}"
     def config = readJSON file: "./cdk.json"
-    echo "test"
-    echo branch
-    echo readFile('./cdk.json')
+    echo "test2"
+    // echo readFile('./cdk.json')
     switch(branch) {
         case branch = 'develop':
             config["context"] = reasJSON(file: './conf/dev_conf.json')
