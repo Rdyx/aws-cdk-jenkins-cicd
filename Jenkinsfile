@@ -1,7 +1,7 @@
 def load_conf(branch) {
     def config = readJSON(file: 'cdk.json')
     echo ("Branch ${branch}")
-    switch(branch):
+    switch(branch) {
         case 'develop':
             config["context"] = reasJSON(file: './conf/dev_conf.json')
         case 'master':
@@ -9,6 +9,7 @@ def load_conf(branch) {
         default:
             config["context"] = reasJSON(file: './conf/test_conf.json')
             config["context"]["SUFFIX"] += '-' + env.BRANCH_NAME.split('-')[0].split('/')[1]
+    }
 
     env.SUFFIX = config["context"]["SUFFIX"]
     env.AWS_REGION = config["context"]["AWS_REGION"]
