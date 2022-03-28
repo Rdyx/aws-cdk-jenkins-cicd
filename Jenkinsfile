@@ -1,4 +1,5 @@
 def load_conf(branch) {
+    echo readJSON text:'{"context": {}}'
     def configz = readJSON text:'{"context": {}}'//'./cdk.json'
     echo configz["context"]
     // config = readJSON file:'./cdk.json'
