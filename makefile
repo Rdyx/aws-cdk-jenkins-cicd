@@ -5,7 +5,7 @@ init:
 	pip3 install -r requirements.txt --user
 
 pylint:
-	python -m pylint -rn \
+	python3 -m pylint -rn \
 		--rcfile=utils_files/.pylintrc \
 		--fail-under=9.50 \
 		--msg-template='{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}' \
