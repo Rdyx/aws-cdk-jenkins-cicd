@@ -1,5 +1,5 @@
 def load_conf(branch) {
-    echo "Branch ${branch}"
+    print("Branch ${branch}")
     echo (readFile('./cdk.json'))
     def config=readJSON(file:'./cdk.json')
     echo "test2"
