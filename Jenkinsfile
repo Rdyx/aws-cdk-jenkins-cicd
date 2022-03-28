@@ -2,6 +2,7 @@ def load_conf(branch) {
     echo "Branch ${branch}"
     def config = readJSON(file: './cdk.json')
     echo "test"
+    echo "${config}"
 
     switch(branch) {
         case branch = 'develop':
