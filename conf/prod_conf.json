@@ -1,0 +1,8 @@
+{
+	"AWS_REGION": "eu-west-3",
+	"AWS_ACCOUNT": "949670026899",
+	"SUFFIX": "project-name-prod",
+	"KMS_KEY": "jenkins",
+	"AVAILABILITY_ZONES": ["eu-west-3"],
+	"ALB_AVAILABILITY_ZONES": ["eu-west-3a", "eu-west-3b"]
+}
