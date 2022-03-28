@@ -1,16 +1,7 @@
 def load_conf(branch) {
-    // echo readJSON text:'{"context": {}}'
-    echo readFile('./cdk.json')
-    def config = readJSON file: './cdk.json'//'./cdk.json'
-    echo config["context"]
-    // config = readJSON file:'./cdk.json'
     echo "Branch ${branch}"
-    echo "test2"
-    echo "${config}"
-    // echo readFile('./cdk.json')
-    // if (branch=="master"){
-    //         config["context"] = reasJSON(file: './conf/prod_conf.json')
-    // }
+    def config = readJSON file: './cdk.json'//'./cdk.json'
+
     switch(branch) {
         case branch = 'develop':
             config["context"] = reasJSON(file: './conf/dev_conf.json')
@@ -27,8 +18,8 @@ def load_conf(branch) {
     // env.SUFFIX = config["context"]["SUFFIX"]
     // env.AWS_REGION = config["context"]["AWS_REGION"]
 
-    writeJSON(file:'./cdk.json', json:config, pretty: 2)
-    echo (readFile('./cdk.json'))
+    writeJSON file:'./cdk.json', json:config, pretty: 2
+    echo readFile('./cdk.json')
 }
 
 
