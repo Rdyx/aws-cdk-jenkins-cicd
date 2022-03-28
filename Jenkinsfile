@@ -1,10 +1,10 @@
 def load_conf(branch) {
     echo "test"
-    def config = readJSON(file: './cdk.json')
+    echo ("Branch ${branch}")
+    def config = readJSON(file:'./cdk.json')
     echo "test"
     echo branch
     echo readFile('./cdk.json')
-    echo ("Branch ${branch}")
     switch(branch) {
         case branch = 'develop':
             config["context"] = reasJSON(file: './conf/dev_conf.json')
@@ -21,7 +21,7 @@ def load_conf(branch) {
     env.SUFFIX = config["context"]["SUFFIX"]
     env.AWS_REGION = config["context"]["AWS_REGION"]
 
-    writeJSON file: './cdk.json', json:config, pretty: 4
+    writeJSON file:'./cdk.json', json:config, pretty: 4
     echo (readFile('./cdk.json'))
 }
 
