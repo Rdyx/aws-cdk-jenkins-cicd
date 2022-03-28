@@ -47,6 +47,7 @@ pipeline {
                 script {
                     deploy = true
                     git_commit_message = sh(returnStdout: true, script: 'git show -s --format=%B -1').trim()
+                    echo ("Commit: ${git_commit_message}")
 
                     if (git_commit_message.endsWith("NODEPLOY") && BRANCH_ENV == 'none') {
                         echo "This build will not be deployed."
