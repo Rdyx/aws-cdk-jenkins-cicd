@@ -7,9 +7,9 @@ def load_conf(branch) {
     echo "${HOME}"
     echo (readFile('./cdk.json'))
     echo "${HOME}"
-    echo (readJSON(file:'./cdk.json'))
     def config=readJSON(file:'./cdk.json')
     echo "test2"
+    echo "${config}"
     // echo readFile('./cdk.json')
     switch(branch) {
         case branch = 'develop':
