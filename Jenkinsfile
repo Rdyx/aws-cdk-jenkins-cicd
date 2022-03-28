@@ -1,18 +1,16 @@
 def load_conf(branch) {
     echo "Branch ${branch}"
     def config = readJSON(file: './cdk.json')
-    echo "test"
-    echo "${config}"
 
     switch(branch) {
         case branch = 'develop':
-            config["context"] = reasJSON(file: './conf/dev_conf.json')
+            config["context"] = readJSON(file: './conf/dev_conf.json')
             break
         case branch = 'master':
-            config["context"] = reasJSON(file: './conf/prod_conf.json')
+            config["context"] = readJSON(file: './conf/prod_conf.json')
             break
         default:
-            config["context"] = reasJSON(file: './conf/test_conf.json')
+            config["context"] = readJSON(file: './conf/test_conf.json')
             config["context"]["SUFFIX"] += '-' + env.BRANCH_NAME.split('-')[0].split('/')[1]
             break
     }
