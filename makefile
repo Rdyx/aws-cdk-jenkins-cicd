@@ -21,7 +21,7 @@ beforedeploy:
 	python3 utils_files/before_deploy/build_lambdas_layers.py --path back/lambdas_layers
 
 unittests:
-	tox
+	python3 -m tox
 
 deploy:
 	cdk synth
