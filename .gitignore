@@ -3,3 +3,4 @@
 .vscode/
 **/__pycache__/
 cdk.out/
+deploy-output.json
