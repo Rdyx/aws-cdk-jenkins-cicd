@@ -1,7 +1,7 @@
 {
 	"AWS_REGION": "eu-west-3",
 	"AWS_ACCOUNT": "949670026899",
-	"SUFFIX": "project-name",
+	"PROJECT_NAME": "project-name",
 	"STAGE": "dev",
 	"KMS_KEY": "jenkins",
 	"AVAILABILITY_ZONES": ["eu-west-3"],

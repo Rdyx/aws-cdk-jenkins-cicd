@@ -9,11 +9,11 @@ def load_conf(branch) {
             config["context"] = readJSON(file: './conf/prod_conf.json')
         default:
             config["context"] = readJSON(file: './conf/test_conf.json')
-            config["context"]["SUFFIX"] += '-' + env.BRANCH_NAME.split('-')[0].split('/')[1]
+            config["context"]["PROJECT_NAME"] += '-' + env.BRANCH_NAME.split('-')[0].split('/')[1]
     }
 
-    env.SUFFIX = config["context"]["SUFFIX"]
-    env.AWS_REGION = config["context"]["AWS_REGION"]
+    env.PROJECT_NAME = config["context"]["PROJECT_NAME"]
+    env.AWS_DEFAULT_REGION = config["context"]["AWS_DEFAULT_REGION"]
 
     writeJSON file:'./cdk.json', json:config, pretty: 2
     echo readFile('./cdk.json')
