@@ -6,7 +6,7 @@ from front.front_stack import FrontStack
 
 
 app = cdk.App()
-ENV = cdk.core.Environment(
+ENV = cdk.Environment(
     region=app.node.try_get_context("AWS_REGION"),
     account=app.node.try_get_context("AWS_ACCOUNT"),
 )
