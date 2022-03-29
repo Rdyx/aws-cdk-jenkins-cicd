@@ -1,7 +1,7 @@
 SHELL = /bin/sh
 
 init:
-	pip3 uninstall aws_cdk.core
+	pip3 uninstall aws_cdk.core -y
 	pip3 install --upgrade awscli --user
 	pip3 install -r requirements.txt --user
 
