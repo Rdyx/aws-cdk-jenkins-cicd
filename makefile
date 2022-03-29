@@ -20,6 +20,7 @@ unittests:
 	python3 -m tox
 
 deploy:
+	cdk
 	cdk synth
 	cdk bootstrap
 	cdk deploy --all --require-approval=never --outputs-file deploy-output.json
