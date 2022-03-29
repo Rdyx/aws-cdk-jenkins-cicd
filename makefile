@@ -1,7 +1,7 @@
 SHELL = /bin/sh
 
 init:
-	npm install -g aws-cdk
+	pip3 uninstall aws_cdk.core
 	pip3 install --upgrade awscli --user
 	pip3 install -r requirements.txt --user
 
