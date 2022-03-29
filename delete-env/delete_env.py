@@ -12,7 +12,7 @@ def delete_env(branch_number):
 
     print(f"Branch number: {branch_number}")
 
-    s3_client = boto3.client("s3")
+    s3_client = boto3.resource("s3")
     cloudformation = boto3.resource("cloudformation", region_name=AWS_REGION)
 
     buckets_list = [
@@ -32,7 +32,7 @@ def delete_env(branch_number):
             bucket.objects.all().delete()
 
     if len(stacks_list):
-        for stack in stacks:
+        for stack in stacks_list:
             stack.delete()
 
 
