@@ -28,7 +28,6 @@ pipeline {
     environment {
         HOME = "${env.WORKSPACE}"
         BRANCH_ENV = "{env.BRANCH_NAME == 'develop' ? 'develop' : env.BRANCH_NAME == 'master' ? 'production' : 'none'}"
-
     }
 
     stages {
