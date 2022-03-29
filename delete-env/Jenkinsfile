@@ -26,6 +26,8 @@ pipeline {
         }
         stage('Load Conf') {
             steps {
+                sh "ls"
+                sh "ls ../"
                 load_conf(params.branch_id)
             }
         }
