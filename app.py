@@ -10,10 +10,10 @@ ENV = cdk.Environment(
     region=app.node.try_get_context("AWS_REGION"),
     account=app.node.try_get_context("AWS_ACCOUNT"),
 )
-
 SUFFIX = app.node.try_get_context("SUFFIX")
-print(ENV, SUFFIX)
-BackStack(app, f"back-{SUFFIX}", env=ENV)
-# FrontStack(app, f"back-{SUFFIX}", env=ENV)
+STAGE = app.node.try_get_context("STAGE")
+
+BackStack(app, f"back-{SUFFIX}-{STAGE}", env=ENV)
+FrontStack(app, f"front-{SUFFIX}-{STAGE}", env=ENV)
 
 app.synth()
