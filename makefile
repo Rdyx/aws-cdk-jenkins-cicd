@@ -21,7 +21,7 @@ unittests:
 	python3 -m tox
 
 deploy:
-	python3 -m aws_cdk.core synth
+	cdk synth
 	python3 -m aws_cdk.core bootstrap
 	python3 -m aws_cdk.core deploy --all --require-approval=never --outputs-file deploy-output.json
 
