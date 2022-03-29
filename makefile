@@ -1,9 +1,9 @@
 SHELL = /bin/sh
 
 init:
+	npm install -g aws-cdk
 	pip3 install --upgrade awscli --user
 	pip3 install -r requirements.txt --user
-	pip3 install aws_cdk.core==1.150.0
 
 pylint:
 	python3 -m pylint -rn \
