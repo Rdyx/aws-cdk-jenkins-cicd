@@ -1,8 +1,8 @@
 """ Back End Stack """
 from aws_cdk import (
-    # Duration,
+    Duration,
     Stack,
-    # aws_sqs as sqs,
+    aws_sqs as sqs,
 )
 from constructs import Construct
 
@@ -16,7 +16,8 @@ class BackStack(Stack):
         # The code that defines your stack goes here
 
         # example resource
-        # queue = sqs.Queue(
-        #     self, "AwsCdkJenkinsCicdQueue",
-        #     visibility_timeout=Duration.seconds(300),
-        # )
+        sqs.Queue(
+            self,
+            "AwsCdkJenkinsCicdQueue",
+            visibility_timeout=Duration.seconds(300),
+        )
