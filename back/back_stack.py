@@ -19,6 +19,6 @@ class BackStack(Stack):
         # example resource
         sqs.Queue(
             self,
-            "AwsCdkJenkinsCicdQueue",
+            queue_name="back-SQS",
             visibility_timeout=Duration.seconds(300),
         )

@@ -19,6 +19,6 @@ class FrontStack(Stack):
         # example resource
         sqs.Queue(
             self,
-            "AwsCdkJenkinsCicdQueue2",
+            queue_name="front-SQS",
             visibility_timeout=Duration.seconds(300),
         )
