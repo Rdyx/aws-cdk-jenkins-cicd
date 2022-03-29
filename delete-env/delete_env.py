@@ -18,12 +18,12 @@ def delete_env(branch_number):
     buckets_list = [
         bucket
         for bucket in s3_client.buckets.all()
-        if bucket.name.endsWith(branch_number)
+        if bucket.name.endswith(branch_number)
     ]
     stacks_list = [
         stack
         for stack in cloudformation.stacks.all()
-        if stack.name.endsWith(branch_number)
+        if stack.name.endswith(branch_number)
     ]
 
     if len(buckets_list):
