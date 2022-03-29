@@ -12,8 +12,8 @@ def load_conf(branch) {
             config["context"]["SUFFIX"] += '-' + env.BRANCH_NAME.split('-')[0].split('/')[1]
     }
 
-    // env.SUFFIX = config["context"]["SUFFIX"]
-    // env.AWS_REGION = config["context"]["AWS_REGION"]
+    env.SUFFIX = config["context"]["SUFFIX"]
+    env.AWS_REGION = config["context"]["AWS_REGION"]
 
     writeJSON file:'./cdk.json', json:config, pretty: 2
     echo readFile('./cdk.json')
