@@ -2,7 +2,7 @@ def load_conf(branch) {
     echo "Branch ${branch}"
     def config = readJSON(file: './cdk.json')
 
-    config["context"] = readJSON(file: '../conf/prod_conf.json')
+    config["context"] = readJSON(file: './conf/prod_conf.json')
 
     env.AWS_DEFAULT_REGION = config["context"]["AWS_DEFAULT_REGION"]
 
@@ -26,8 +26,6 @@ pipeline {
         }
         stage('Load Conf') {
             steps {
-                sh "ls"
-                sh "ls ../"
                 load_conf(params.branch_id)
             }
         }
