@@ -19,6 +19,7 @@ class FrontStack(Stack):
         # example resource
         sqs.Queue(
             self,
-            queue_name="front-SQS",
+            id="front-SQS"
+            queue_name="front-SQS-name",
             visibility_timeout=Duration.seconds(300),
         )

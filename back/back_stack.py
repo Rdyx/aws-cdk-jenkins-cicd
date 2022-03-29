@@ -19,6 +19,7 @@ class BackStack(Stack):
         # example resource
         sqs.Queue(
             self,
-            queue_name="back-SQS",
+            id="back-SQS"
+            queue_name="back-SQS-name",
             visibility_timeout=Duration.seconds(300),
         )
