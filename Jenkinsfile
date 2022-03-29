@@ -78,6 +78,7 @@ pipeline {
                 }
             }
             steps {
+                sh "ls"
                 sh "make deploy"
             }
         }
