@@ -66,11 +66,11 @@ pipeline {
                 sh "make beforedeploy"
             }
         }
-        stage('Unit Tests') {
-            steps {
-                sh "make unittests"
-            }
-        }
+        // stage('Unit Tests') {
+        //     steps {
+        //         sh "make unittests"
+        //     }
+        // }
         stage('Deploy') {
             when {
                 expression {
