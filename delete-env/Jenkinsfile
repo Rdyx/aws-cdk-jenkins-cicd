@@ -14,10 +14,6 @@ def load_conf(branch) {
 pipeline {
     agent any
 
-    environment {
-        HOME = "${env.WORKSPACE}"
-    }
-
     stages {
         stage('Install Dependencies') {
             steps {
