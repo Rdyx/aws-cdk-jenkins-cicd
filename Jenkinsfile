@@ -66,11 +66,11 @@ pipeline {
                 sh "make beforedeploy"
             }
         }
-        // stage('Unit Tests') {
-        //     steps {
-        //         sh "make unittests"
-        //     }
-        // }
+        stage('Unit Tests') {
+            steps {
+                sh "make unittests"
+            }
+        }
         stage('Deploy') {
             when {
                 expression {
@@ -78,11 +78,6 @@ pipeline {
                 }
             }
             steps {
-                sh "echo ${env.SUFFIX}"
-                sh "rm -rf cdk.out"
-                sh "ls"
-                sh "cdk list"
-                // sh "cdk list"
                 sh "make deploy"
             }
         }
