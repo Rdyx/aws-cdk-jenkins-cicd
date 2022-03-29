@@ -78,7 +78,7 @@ pipeline {
                 }
             }
             steps {
-                sh "${env.SUFFIX}"
+                sh "echo ${env.SUFFIX}"
                 sh "rm -rf cdk.out"
                 sh "ls"
                 sh "make deploy"
