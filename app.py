@@ -12,8 +12,8 @@ ENV = cdk.Environment(
 )
 
 SUFFIX = app.node.try_get_context("SUFFIX")
-
+print(ENV, SUFFIX)
 BackStack(app, f"back-{SUFFIX}", env=ENV)
-FrontStack(app, f"back-{SUFFIX}", env=ENV)
+# FrontStack(app, f"back-{SUFFIX}", env=ENV)
 
 app.synth()
