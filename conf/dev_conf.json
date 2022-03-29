@@ -1,5 +1,5 @@
 {
-	"AWS_REGION": "eu-west-3",
+	"AWS_DEFAULT_REGION": "eu-west-3",
 	"AWS_ACCOUNT": "949670026899",
 	"PROJECT_NAME": "project-name",
 	"STAGE": "dev",
