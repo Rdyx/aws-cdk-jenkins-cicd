@@ -32,11 +32,11 @@ pipeline {
     }
 
     stages {
-        stage('SCM') {
-            steps {
-                checkout scm
-            }
-        }
+        // stage('SCM') {
+        //     steps {
+        //         checkout scm
+        //     }
+        // }
         stage('Check Deploy') {
             steps {
                 script {
