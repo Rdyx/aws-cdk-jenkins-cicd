@@ -9,7 +9,7 @@ pylint:
 		--rcfile=utils_files/.pylintrc \
 		--fail-under=9.50 \
 		--msg-template='{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}' \
-		-- output=report.txt \
+		--output=report.txt \
 		./back \
 		./back/lambdas \
 		./front
