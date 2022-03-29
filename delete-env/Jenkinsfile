@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                sh "pip3 install boto3 --user"
+            }
+        }
+        stage('Delete Environment') {
+            steps {
+                sh "python3 delete-env/delete_env.py ${params.branch_number}"
+            }
+        }
+    }
+}

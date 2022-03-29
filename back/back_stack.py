@@ -1,4 +1,5 @@
 """ Back End Stack """
+
 from aws_cdk import (
     Duration,
     Stack,

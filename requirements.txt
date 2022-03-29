@@ -2,3 +2,4 @@ constructs>=10.0.0,<11.0.0
 pylint==2.13.2
 tox==3.24.5
 aws-cdk-lib==2.18.0
+boto3==1.21.28
