@@ -1,7 +1,6 @@
 SHELL = /bin/sh
 
 init:
-	pip3 uninstall aws_cdk.core -y
 	pip3 install --upgrade awscli --user
 	pip3 install -r requirements.txt --user
 
@@ -22,8 +21,8 @@ unittests:
 
 deploy:
 	cdk synth
-	python3 -m aws_cdk.core bootstrap
-	python3 -m aws_cdk.core deploy --all --require-approval=never --outputs-file deploy-output.json
+	cdk bootstrap
+	cdk deploy --all --require-approval=never --outputs-file deploy-output.json
 
 afterdeploy:
 	python3 utils_files/after_deploy/after_deploy.py
