@@ -18,15 +18,7 @@ class BackStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         self.suffix = f"{self.node.try_get_context('PROJECT_NAME')}-{self.node.try_get_context('STAGE')}"
-        # The code that defines your stack goes here
 
-        # example resource
-        # sqs.Queue(
-        #     self,
-        #     id="back-SQS",
-        #     queue_name="back-SQS-name",
-        #     visibility_timeout=Duration.seconds(300),
-        # )
         # ### GET VPC ### #
         self.vpc = ec2.Vpc.from_lookup(
             self,
