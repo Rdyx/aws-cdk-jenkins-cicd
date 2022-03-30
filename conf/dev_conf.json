@@ -5,5 +5,6 @@
 	"STAGE": "dev",
 	"KMS_KEY": "jenkins",
 	"AVAILABILITY_ZONES": ["eu-west-3"],
-	"ALB_AVAILABILITY_ZONES": ["eu-west-3a", "eu-west-3b"]
+	"ALB_AVAILABILITY_ZONES": ["eu-west-3a", "eu-west-3b"],
+	"VPC_ID": "vpc-0f19b04be15d7736d"
 }
