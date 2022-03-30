@@ -14,7 +14,7 @@ def create_lambda(
         self,
         id=f"lambda-{normalized_name}",
         function_name=f"{normalized_name}",
-        code=lambda_.Code.asset(f"back/lambdas/lambda_{name}"),
+        code=lambda_.AssetCode(f"back/lambdas/lambda_{name}"),
         handler=f"lambda_{name}.lambda_handler",
         runtime=lambda_.Runtime.PYTHON_3_8,
         layers=layers,
