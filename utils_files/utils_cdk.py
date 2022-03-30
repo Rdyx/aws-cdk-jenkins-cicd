@@ -22,5 +22,5 @@ def create_lambda(
         role=role,
         timeout=cdk.Duration.seconds(timeout) if timeout else cdk.Duration.seconds(10),
         memory_size=memory_size if memory_size else 128,
-        security_group=self.lambda_security_group,
+        security_groups=[self.lambda_security_group],
     )
