@@ -14,10 +14,13 @@ pylint:
 		./front
 
 beforedeploy:
-	python3 utils_files/before_deploy/build_lambdas_layers.py --path back/lambdas_layers
+	echo ""
 
 unittests:
 	python3 -m tox
+
+buildlayers:
+	python3 utils_files/build_layers/build_lambdas_layers.py --path back/lambdas_layers
 
 deploy:
 	cdk synth

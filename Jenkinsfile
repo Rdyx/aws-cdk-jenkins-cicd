@@ -69,6 +69,11 @@ pipeline {
                 sh "make unittests"
             }
         }
+        stage('Build Lambdas Layers') {
+            steps {
+                sh "make buildlayers"
+            }
+        }
         stage('Deploy') {
             when {
                 expression {
