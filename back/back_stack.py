@@ -41,7 +41,7 @@ class BackStack(Stack):
         layer_requests = lambda_.LayerVersion(
             self,
             id=f"LAYER-requests-{self.suffix}",
-            code=lambda_.AssetCode("back/lambda_layers/requests"),
+            code=lambda_.AssetCode("back/lambdas_layers/requests"),
             description="Layer containing the requests package.",
         )
 
