@@ -1,14 +1,12 @@
 """ Back End Stack """
 
 from aws_cdk import (
-    Duration,
     Stack,
-    aws_sqs as sqs,
     aws_lambda as lambda_,
     aws_ec2 as ec2,
 )
 from constructs import Construct
-import utils_files.utils_cdk as utils_cdk
+from utils_files import utils_cdk
 
 
 class BackStack(Stack):
@@ -16,8 +14,9 @@ class BackStack(Stack):
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
-
-        self.suffix = f"{self.node.try_get_context('PROJECT_NAME')}-{self.node.try_get_context('STAGE')}"
+        self.project_name = self.node.try_get_context("PROJECT_NAME")
+        self.stage = self.node.try_get_context("STAGE")
+        self.suffix = f"{self.project_name}-{self.stage}"
 
         # ### GET VPC ### #
         self.vpc = ec2.Vpc.from_lookup(
@@ -26,8 +25,6 @@ class BackStack(Stack):
             vpc_id=self.node.try_get_context("VPC_ID"),
             is_default=True,
         )
-
-        # self.
 
         # ### LAYERS ### #
         layer_requests = lambda_.LayerVersion(
@@ -44,5 +41,6 @@ class BackStack(Stack):
             vpc=self.vpc,
             security_group_name=f"lambda_security-group-{self.suffix}",
         )
+
         # ### LAMBDAS ### #
         utils_cdk.create_lambda(self, "test_request", [layer_requests])
