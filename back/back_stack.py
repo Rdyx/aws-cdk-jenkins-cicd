@@ -32,7 +32,7 @@ class BackStack(Stack):
             self,
             id="VPC",
             vpc_id=self.node.try_get_context("VPC_ID"),
-            is_default=False,
+            is_default=True,
         )
 
         # self.
