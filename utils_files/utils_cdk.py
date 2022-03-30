@@ -1,4 +1,5 @@
-from aws_cdk import cdk, Duration, aws_lambda as lambda_
+import aws_cdk as cdk
+from aws_cdk import aws_lambda as lambda_
 
 
 def create_lambda(
