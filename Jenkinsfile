@@ -1,5 +1,5 @@
 def load_conf(branch) {
-    echo "Branch ${branch}."
+    echo "Branch ${branch}"
     def config = readJSON(file: './cdk.json')
 
     switch(branch) {
