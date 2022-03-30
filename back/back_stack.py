@@ -53,4 +53,4 @@ class BackStack(Stack):
             security_group_name=f"lambda_security-group-{self.suffix}",
         )
         # ### LAMBDAS ### #
-        utils_cdk.create_lambda(self, "test-request", [layer_requests])
+        utils_cdk.create_lambda(self, "test_request", [layer_requests])
