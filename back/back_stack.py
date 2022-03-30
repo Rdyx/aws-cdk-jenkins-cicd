@@ -21,18 +21,17 @@ class BackStack(Stack):
         # The code that defines your stack goes here
 
         # example resource
-        sqs.Queue(
-            self,
-            id="back-SQS",
-            queue_name="back-SQS-name",
-            visibility_timeout=Duration.seconds(300),
-        )
+        # sqs.Queue(
+        #     self,
+        #     id="back-SQS",
+        #     queue_name="back-SQS-name",
+        #     visibility_timeout=Duration.seconds(300),
+        # )
         # ### GET VPC ### #
         self.vpc = ec2.Vpc.from_lookup(
             self,
             id="VPC",
             vpc_id=self.node.try_get_context("VPC_ID"),
-            is_default=False,
         )
 
         # self.
