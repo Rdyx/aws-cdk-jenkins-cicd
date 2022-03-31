@@ -12,7 +12,7 @@ table_url_request_count = DDB.Table(os.environ.get("TABLE_URL_REQUEST_COUNT"))
 
 def increment_status_code_counter(status_code, url):
     queryresult = table_url_request_count.query(
-        KeyConditionExpression=Key("status_code").eq(status_code) & Key("url").eq(url)
+        KeyConditionExpression=Key("url").eq(url) & Key("status_code").eq(status_code)
     )["Items"]
 
     if queryresult:

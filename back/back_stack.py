@@ -66,10 +66,8 @@ class BackStack(Stack):
         ddb_url_request_count = utils_cdk.create_dynamodb(
             self,
             name="url-request-count",
-            partition_key=ddb.Attribute(
-                name="status_code", type=ddb.AttributeType.NUMBER
-            ),
-            sort_key=ddb.Attribute(name="url", type=ddb.AttributeType.STRING),
+            partition_key=ddb.Attribute(name="url", type=ddb.AttributeType.STRING),
+            sort_key=ddb.Attribute(name="status_code", type=ddb.AttributeType.NUMBER),
             on_demand=True,
         )
 
