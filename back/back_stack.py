@@ -23,7 +23,7 @@ class BackStack(Stack):
         # ### ROLES ### #
         role_lambda_access_ddb = utils_cdk.create_role(
             self,
-            role_id="IAM-role-access-ddb",
+            role_id=f"access-ddb-{self.suffix}",
             inline_policies={
                 "ec2_kms_policy": iam.PolicyDocument(
                     statements=[
@@ -57,7 +57,7 @@ class BackStack(Stack):
         # ### SECURITY GROUPS ### #
         self.lambda_security_group = ec2.SecurityGroup(
             self,
-            id=f"lambda-security-group-{self.suffix}",
+            id=f"SG-lambda-{self.suffix}",
             vpc=self.vpc,
             security_group_name=f"lambda_security-group-{self.suffix}",
         )
@@ -65,17 +65,36 @@ class BackStack(Stack):
         # ### DYNAMODB ### #
         ddb_url_request_count = utils_cdk.create_dynamodb(
             self,
-            name="url-request-count",
+            table_id=f"url-request-count-{self.suffix}",
             partition_key=ddb.Attribute(name="url", type=ddb.AttributeType.STRING),
+            # Set table name only when you're certain about your partition_key & sort_key
+            # if you're using one. Changing a table name is not possible afterwise unless
+            # you delete the stack.
+            # table_name="url-request-count",
             sort_key=ddb.Attribute(name="status_code", type=ddb.AttributeType.NUMBER),
-            on_demand=True,
         )
 
         # ### LAMBDAS ### #
-        utils_cdk.create_lambda(
+        lambda_auth = utils_cdk.create_lambda(self, lambda_auth)
+
+        lb_request_and_increment_url_counter = utils_cdk.create_lambda(
             self,
-            name="test_request",
+            name=f"request_and_increment_url_counter_{self.suffix}",
             layers=[layer_requests],
-            environment={"TABLE_URL_REQUEST_COUNT": ddb_url_request_count.table_name},
+            environment={
+                "TABLE_URL_REQUEST_COUNT_NAME": ddb_url_request_count.table_name
+            },
             role=role_lambda_access_ddb,
+        )
+
+        # ### API GATEWAY ### #
+        api_gateway = utils_cdk.create_api_gateway(
+            self,
+            apigw_id=self.suffix,
+        )
+
+        # ### API GATEWAY ROUTES ### #
+        get_url_counter_route = api_gateway.root.add_resource("url-counter")
+        utils_cdk.add_apigw_lambda_route(
+            get_url_counter_route, "GET", lb_request_and_increment_url_counter
         )
