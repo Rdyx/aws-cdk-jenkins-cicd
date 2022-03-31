@@ -19,15 +19,15 @@ def create_api_gateway(
 ):
     """Standard function to create an API Gateway"""
     # Example with authorizer authentication
-    # authorizer = apigw.TokenAuthorizer(
-    #     self,
-    #     id=f"AUTHORIZER-{auth_id}",
-    #     identity_source=apigw.IdentitySource.header(header_token),
-    #     validation_regex=validation_regex,
-    #     handler=lambda_auth,
-    #     authorizer_name="token_auth",
-    #     results_cache_ttl=cdk.Duration.minutes(0),
-    # )
+    authorizer = apigw.TokenAuthorizer(
+        self,
+        id=f"AUTHORIZER-{auth_id}",
+        identity_source=apigw.IdentitySource.header(header_token),
+        validation_regex=validation_regex,
+        handler=lambda_auth,
+        authorizer_name="token_auth",
+        results_cache_ttl=cdk.Duration.minutes(0),
+    )
 
     api_policy = iam.PolicyDocument(
         statements=[
@@ -59,7 +59,7 @@ def create_api_gateway(
             stage_name=self.node.try_get_context("STAGE"),
         ),
         # Uncomment if you want to enable a custom authorizer
-        # default_method_options=apigw.MethodOptions(authorizer=authorizer)
+        default_method_options=apigw.MethodOptions(authorizer=authorizer),
     )
 
 
