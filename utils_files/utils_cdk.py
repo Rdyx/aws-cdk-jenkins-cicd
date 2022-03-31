@@ -37,6 +37,7 @@ def create_api_gateway(
                 principals=[iam.ArnPrincipal("*")],
                 resources=["execute-api:/*"],
             ),
+            # Comment if you don't want to use a custom authorizer
             iam.PolicyStatement(
                 actions=["execute-api:Invoke"],
                 effect=iam.Effect.DENY,
@@ -58,7 +59,7 @@ def create_api_gateway(
         deploy_options=apigw.StageOptions(
             stage_name=self.node.try_get_context("STAGE"),
         ),
-        # Uncomment if you want to enable a custom authorizer
+        # Comment if you don't want to enable a custom authorizer
         default_method_options=apigw.MethodOptions(authorizer=authorizer),
     )
 
