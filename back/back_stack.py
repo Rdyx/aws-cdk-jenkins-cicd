@@ -59,7 +59,6 @@ class BackStack(Stack):
             self,
             id=f"SG-lambda-{self.suffix}",
             vpc=self.vpc,
-            security_group_name=f"lambda_security-group-{self.suffix}",
         )
 
         # ### DYNAMODB ### #
