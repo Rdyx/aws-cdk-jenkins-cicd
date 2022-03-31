@@ -65,7 +65,7 @@ class BackStack(Stack):
         # ### DYNAMODB ### #
         ddb_request_count = utils_cdk.create_dynamodb(
             self,
-            table_name="request-count",
+            name="request-count",
             partition_key=ddb.Attribute(
                 name="status_code", type=ddb.AttributeType.NUMBER
             ),
