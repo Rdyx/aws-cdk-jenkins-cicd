@@ -10,9 +10,9 @@ DDB = boto3.resource("dynamodb")
 table_url_request_count = DDB.Table(os.environ.get("TABLE_URL_REQUEST_COUNT"))
 
 
-def increment_status_code_counter(status_code, url):
+def increment_status_code_counter(url, status_code):
     queryresult = table_url_request_count.query(
-        KeyConditionExpression=Key("url").eq(url) & Key("status_code").eq(status_code)
+        KeyConditionExpression=Key("status_code").eq(status_code) & Key("url").eq(url)
     )["Items"]
 
     if queryresult:
@@ -26,6 +26,11 @@ def increment_status_code_counter(status_code, url):
 
 
 def lambda_handler(event, context):
-    url = event["url"] if "url" in event else "https://google.com"
-    res = requests.get(url)
-    return increment_status_code_counter(res.status_code, url)
+    url = event["url"] if "url" in event else "https://google.comz"
+
+    try:
+        res = requests.get(url)
+        return increment_status_code_counter(url, res.status_code)
+    except Exception as err:
+        print(err)
+        return increment_status_code_counter(url, 500)
