@@ -2,9 +2,7 @@
     Blueprint from AWS Documentation
         - https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html
         - https://github.com/awslabs/aws-apigateway-lambda-authorizer-blueprints/blob/master/blueprints/python/api-gateway-authorizer-python.py
-"""
 
-"""
 Copyright 2015-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
@@ -20,7 +18,7 @@ import re
 
 def lambda_handler(event, context):
     """Do not print the auth token unless absolutely necessary"""
-    print("Request event: " + event)
+    print("Request event: " + str(event))
     print("Method ARN: " + event["methodArn"])
     """validate the incoming token"""
     """and produce the principal user identifier associated with the token"""
