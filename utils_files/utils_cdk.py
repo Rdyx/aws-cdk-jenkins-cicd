@@ -65,46 +65,59 @@ def create_api_gateway(
 
 
 def add_apigw_lambda_route(route, method, lambda_):
+    default_request_template = {
+        "application/json": """
+        #set($allParams = $input.params())
+        {
+            "body": $input.json('$'),
+            "params" : {
+                #foreach($type in $allParams.keySet())
+                #set($params = $allParams.get($type))
+                "$type" : {
+                    #foreach($paramName in $params.keySet())
+                    "$paramName" : "$util.escapeJavaScript($params.get($paramName))"
+                    #if($foreach.hasNext),#end
+                    #end
+                }
+                #if($foreach.hasNext),#end
+                #end
+            },
+            "stage-variables": {
+                #foreach(key in $stageVariables.keySet())
+                "$key": "$util.escapeJavascript($stageVariables.get($key))"
+                #if(foreach.hasNext),#end
+                #end
+            },
+            "context": {
+                "stage" : "$context.stage",
+                "request_id" : "$context.requestId",
+                "api_id" : "$context.apiId",
+                "resource_path" : "$context.resourcePath",
+                "resource_id" : "$context.resourceId",
+                "http_method" : "$context.httpMethod",
+                "source_ip" : "$context.identity.sourceIp",
+                "user-agent" : "$context.identity.userAgent",
+                "account_id" : "$context.identity.accountId",
+                "api_key" : "$context.identity.apiKey",
+                "caller" : "$context.identity.caller",
+                "user" : "$context.identity.user",
+                "user_arn" : "$context.identity.userArn"
+            }
+        }
+        """
+    }
+
     route.add_method(
         method,
         apigw.LambdaIntegration(
             handler=lambda_,
             passthrough_behavior=apigw.PassthroughBehavior.WHEN_NO_TEMPLATES,
-            request_templates=get_default_request_template(),
+            request_templates=default_request_template,
             proxy=False,
             integration_responses=[apigw.IntegrationResponse(status_code="200")],
         ),
         method_responses=[apigw.MethodResponse(status_code="200")],
     )
-
-
-def get_default_request_template():
-    return {
-        "application/json": """
-        #set($allParameters = $input.params())
-        {
-            "body": $input.json('$'),
-            "parameters": {
-                #foreach($type in $allParameters.keySet())
-                #set($parameters = $allParameters.get($type))
-                "$type": {
-                    #foreach($parameterName in $parameters.keySet())
-                    "$parameterName": "$util.escapeJavascript($parameters.get($parameterName))"
-                    #if($foreach.hasNext),#end
-                    #end
-                }
-                #if($foreach.hasNext),#end
-            },
-            "stage-variables": {
-                #foreach($key in $stageVariables.keySet())
-                "$key": "$util.escapeJavascript($stageVariables.get($key))"
-                #if($foreach.hasNext),#end
-                #end
-            },
-            "context": "$context"
-        }
-        """
-    }
 
 
 def create_lambda(
