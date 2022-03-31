@@ -37,13 +37,13 @@ def create_dynamodb(
     ttl_attribute=None,
     kms_key=None,
     stream=None,
-    on_demand=False,
+    on_demand=True,
 ):
     # PAY_PER_REQUEST mode require to manually set RCUs & WCUs.
     # Set default to 5 if none is provided
-    if on_demand and not read_capacity:
+    if not on_demand and not read_capacity:
         read_capacity = 5
-    if on_demand and not write_capacity:
+    if not on_demand and not write_capacity:
         write_capacity = 5
 
     return ddb.Table(
