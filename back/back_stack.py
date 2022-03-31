@@ -75,14 +75,11 @@ class BackStack(Stack):
         )
 
         # ### LAMBDAS ### #
-        lambda_auth = utils_cdk.create_lambda(
-            self,
-            name=f"lambda_auth_{self.suffix}",
-        )
+        lambda_auth = utils_cdk.create_lambda(self, name=f"lambda_auth")
 
         lb_request_and_increment_url_counter = utils_cdk.create_lambda(
             self,
-            name=f"request_and_increment_url_counter_{self.suffix}",
+            name=f"request_and_increment_url_counter",
             layers=[layer_requests],
             environment={
                 "TABLE_URL_REQUEST_COUNT_NAME": ddb_url_request_count.table_name

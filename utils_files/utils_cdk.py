@@ -83,7 +83,7 @@ def create_lambda(
     """Standard function to create a lambda"""
 
     # Note: AWS is not allowing underscore in lambda's ID & Name
-    normalized_name = name.replace("_", "-")
+    normalized_name = f"{name.replace('_', '-')}-{self.suffix}"
 
     return lambda_.Function(
         self,
