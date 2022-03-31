@@ -78,7 +78,17 @@ class BackStack(Stack):
 
         lb_request_and_increment_url_counter = utils_cdk.create_lambda(
             self,
-            name=f"request_and_increment_url_counter",
+            name="request_and_increment_url_counter",
+            layers=[layer_requests],
+            environment={
+                "TABLE_URL_REQUEST_COUNT_NAME": ddb_url_request_count.table_name
+            },
+            role=role_lambda_access_ddb,
+        )
+
+        lb_get_url_counter = utils_cdk.create_lambda(
+            self,
+            name="get_url_counter",
             layers=[layer_requests],
             environment={
                 "TABLE_URL_REQUEST_COUNT_NAME": ddb_url_request_count.table_name
@@ -94,7 +104,16 @@ class BackStack(Stack):
         )
 
         # ### API GATEWAY ROUTES ### #
-        get_url_counter_route = api_gateway.root.add_resource("url-counter")
+        # /increment-url-counter
+        increment_url_counter_route = api_gateway.root.add_resource(
+            "increment-url-counter"
+        )
         utils_cdk.add_apigw_lambda_route(
-            get_url_counter_route, "GET", lb_request_and_increment_url_counter
+            increment_url_counter_route, "POST", lb_request_and_increment_url_counter
+        )
+
+        # /get-url-counter
+        get_url_counter_route = api_gateway.root.add_resource("get-url-counter")
+        utils_cdk.add_apigw_lambda_route(
+            get_url_counter_route, "GET", lb_get_url_counter
         )

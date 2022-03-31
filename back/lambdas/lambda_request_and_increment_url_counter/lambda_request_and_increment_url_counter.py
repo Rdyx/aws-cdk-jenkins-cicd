@@ -43,6 +43,8 @@ def increment_status_code_counter(url, status_code):
 
 def lambda_handler(event, context):
     """Lambda Handler, default lambda executed function"""
+    print(f"Lambda handler: {event}")
+
     url = event["url"] if "url" in event else "https://google.comz"
 
     try:
