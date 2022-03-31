@@ -49,7 +49,6 @@ def create_dynamodb(
     return ddb.Table(
         self,
         id=f"table-{name}",
-        table_name=name,
         partition_key=partition_key,
         sort_key=sort_key,
         read_capacity=read_capacity,
