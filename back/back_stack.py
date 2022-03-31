@@ -63,9 +63,9 @@ class BackStack(Stack):
         )
 
         # ### DYNAMODB ### #
-        ddb_request_count = utils_cdk.create_dynamodb(
+        ddb_url_request_count = utils_cdk.create_dynamodb(
             self,
-            name="request-count",
+            name="url-request-count",
             partition_key=ddb.Attribute(
                 name="status_code", type=ddb.AttributeType.NUMBER
             ),
@@ -78,6 +78,6 @@ class BackStack(Stack):
             self,
             name="test_request",
             layers=[layer_requests],
-            environment={"TABLE_REQUEST_COUNT": ddb_request_count.table_name},
+            environment={"TABLE_URL_REQUEST_COUNT": ddb_url_request_count.table_name},
             role=role_lambda_access_ddb,
         )
