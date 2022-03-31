@@ -69,7 +69,7 @@ def add_apigw_lambda_route(route, method, lambda_):
         "application/json": """
         #set($allParams = $input.params())
         {
-            "body": $input.json('$'),
+            "body-json": $input.json('$'),
             "params" : {
                 #foreach($type in $allParams.keySet())
                 #set($params = $allParams.get($type))
