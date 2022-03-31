@@ -4,6 +4,8 @@ from aws_cdk import (
     Stack,
     aws_lambda as lambda_,
     aws_ec2 as ec2,
+    aws_dynamodb as ddb,
+    aws_iam as iam,
 )
 from constructs import Construct
 from utils_files import utils_cdk
@@ -17,6 +19,24 @@ class BackStack(Stack):
         self.project_name = self.node.try_get_context("PROJECT_NAME")
         self.stage = self.node.try_get_context("STAGE")
         self.suffix = f"{self.project_name}-{self.stage}"
+
+        # ### ROLES ### #
+        role_lambda_access_ddb = utils_cdk.create_role(
+            self,
+            role_id="IAM-role-access-ddb",
+            inline_policies={
+                "ec2_kms_policy": iam.PolicyDocument(
+                    statements=[
+                        iam.PolicyStatement(
+                            actions=["dynamodb:*"],
+                            effect=iam.Effect.ALLOW,
+                            resources=["*"],
+                            sid="lambdaDDBAccess",
+                        ),
+                    ]
+                )
+            },
+        )
 
         # ### GET VPC ### #
         self.vpc = ec2.Vpc.from_lookup(
@@ -42,5 +62,21 @@ class BackStack(Stack):
             security_group_name=f"lambda_security-group-{self.suffix}",
         )
 
+        # ### DYNAMODB ### #
+        ddb_request_count = utils_cdk.create_dynamodb(
+            self,
+            table_name="request-count",
+            partition_key=ddb.Attribute(
+                name="status_code", type=ddb.AttributeType.NUMBER
+            ),
+            on_demand=True,
+        )
+
         # ### LAMBDAS ### #
-        utils_cdk.create_lambda(self, "test_request", [layer_requests])
+        utils_cdk.create_lambda(
+            self,
+            name="test_request",
+            layers=[layer_requests],
+            environment={"TABLE_REQUEST_COUNT": ddb_request_count.table_name},
+            role=role_lambda_access_ddb,
+        )
