@@ -45,7 +45,11 @@ def lambda_handler(event, context):
     """Lambda Handler, default lambda executed function"""
     print(f"Lambda handler: {event}")
 
-    url = event["url"] if "url" in event else "https://google.comz"
+    url = (
+        event["body-json"]["url"]
+        if "url" in event["body-json"]
+        else "https://google.comz"
+    )
 
     try:
         res = requests.get(url)
