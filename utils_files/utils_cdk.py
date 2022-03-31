@@ -64,12 +64,14 @@ def create_api_gateway(
     )
 
 
-def add_apigw_lambda_route(route, method, lambda_):
+def add_apigw_lambda_route(route, method, lambda_, status_code):
+    # See http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html
+    # This template will pass through all parameters including path, querystring, header, stage variables, and context through to the integration endpoint via the body/payload
     default_request_template = {
         "application/json": """
         #set($allParams = $input.params())
         {
-            "body-json": $input.json('$'),
+            "body-json" : $input.json('$'),
             "params" : {
                 #foreach($type in $allParams.keySet())
                 #set($params = $allParams.get($type))
@@ -82,11 +84,31 @@ def add_apigw_lambda_route(route, method, lambda_):
                 #if($foreach.hasNext),#end
                 #end
             },
-            "stage-variables": {
-                #foreach(key in $stageVariables.keySet())
-                "$key": "$util.escapeJavascript($stageVariables.get($key))"
-                #if(foreach.hasNext),#end
+            "stage-variables" : {
+                #foreach($key in $stageVariables.keySet())
+                "$key" : "$util.escapeJavaScript($stageVariables.get($key))"
+                #if($foreach.hasNext),#end
                 #end
+            },
+            "context" : {
+                "account-id" : "$context.identity.accountId",
+                "api-id" : "$context.apiId",
+                "api-key" : "$context.identity.apiKey",
+                "authorizer-principal-id" : "$context.authorizer.principalId",
+                "caller" : "$context.identity.caller",
+                "cognito-authentication-provider" : "$context.identity.cognitoAuthenticationProvider",
+                "cognito-authentication-type" : "$context.identity.cognitoAuthenticationType",
+                "cognito-identity-id" : "$context.identity.cognitoIdentityId",
+                "cognito-identity-pool-id" : "$context.identity.cognitoIdentityPoolId",
+                "http-method" : "$context.httpMethod",
+                "stage" : "$context.stage",
+                "source-ip" : "$context.identity.sourceIp",
+                "user" : "$context.identity.user",
+                "user-agent" : "$context.identity.userAgent",
+                "user-arn" : "$context.identity.userArn",
+                "request-id" : "$context.requestId",
+                "resource-id" : "$context.resourceId",
+                "resource-path" : "$context.resourcePath"
             }
         }
         """
@@ -99,9 +121,11 @@ def add_apigw_lambda_route(route, method, lambda_):
             passthrough_behavior=apigw.PassthroughBehavior.WHEN_NO_TEMPLATES,
             request_templates=default_request_template,
             proxy=False,
-            integration_responses=[apigw.IntegrationResponse(status_code="200")],
+            integration_responses=[
+                apigw.IntegrationResponse(status_code=str(status_code))
+            ],
         ),
-        method_responses=[apigw.MethodResponse(status_code="200")],
+        method_responses=[apigw.MethodResponse(status_code=str(status_code))],
     )
 
 

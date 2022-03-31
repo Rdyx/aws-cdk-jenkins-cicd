@@ -109,11 +109,14 @@ class BackStack(Stack):
             "increment-url-counter"
         )
         utils_cdk.add_apigw_lambda_route(
-            increment_url_counter_route, "POST", lb_request_and_increment_url_counter
+            increment_url_counter_route,
+            "POST",
+            lb_request_and_increment_url_counter,
+            201,
         )
 
         # /get-url-counter
         get_url_counter_route = api_gateway.root.add_resource("get-url-counter")
         utils_cdk.add_apigw_lambda_route(
-            get_url_counter_route, "GET", lb_get_url_counter
+            get_url_counter_route, "GET", lb_get_url_counter, 200
         )
