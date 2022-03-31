@@ -69,12 +69,41 @@ def add_apigw_lambda_route(route, method, lambda_):
         apigw.LambdaIntegration(
             handler=lambda_,
             passthrough_behavior=apigw.PassthroughBehavior.WHEN_NO_TEMPLATES,
-            # request_templates=
+            request_templates=get_default_request_template(),
             proxy=False,
             integration_responses=[apigw.IntegrationResponse(status_code="200")],
         ),
         method_responses=[apigw.MethodResponse(status_code="200")],
     )
+
+
+def get_default_request_template():
+    return {
+        "application/json": """
+        #set($allParameters = $input.params())
+        {
+            "body": $input.json('$'),
+            "parameters": {
+                #foreach($type in $allParameters.keySet())
+                #set($parameters = $allParameters.get($type))
+                "$type": {
+                    #foreach($parameterName in $parameters.keySet())
+                    "$parameterName": "$util.escapeJavascript($parameters.get($parameterName))"
+                    #if($foreach.hasNext),#end
+                    #end
+                }
+                #if($foreach.hasNext),#end
+            },
+            "stage-variables": {
+                #foreach($key in $stageVariables.keySet())
+                "$key": "$util.escapeJavascript($stageVariables.get($key))"
+                #if($foreach.hasNext),#end
+                #end
+            },
+            "context": "$context"
+        }
+        """
+    }
 
 
 def create_lambda(
