@@ -75,7 +75,7 @@ class BackStack(Stack):
         )
 
         # ### LAMBDAS ### #
-        lambda_auth = utils_cdk.create_lambda(self, name=f"lambda_auth")
+        lambda_auth = utils_cdk.create_lambda(self, name=f"auth")
 
         lb_request_and_increment_url_counter = utils_cdk.create_lambda(
             self,
