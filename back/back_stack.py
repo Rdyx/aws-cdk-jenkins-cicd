@@ -69,9 +69,7 @@ class BackStack(Stack):
             partition_key=ddb.Attribute(
                 name="status_code", type=ddb.AttributeType.NUMBER
             ),
-            sort_key=ddb.Attribute(
-                name="url", type=ddb.AttributeType.STRING
-            )
+            sort_key=ddb.Attribute(name="url", type=ddb.AttributeType.STRING),
             on_demand=True,
         )
 
