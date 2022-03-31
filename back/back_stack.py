@@ -75,7 +75,10 @@ class BackStack(Stack):
         )
 
         # ### LAMBDAS ### #
-        lambda_auth = utils_cdk.create_lambda(self, lambda_auth)
+        lambda_auth = utils_cdk.create_lambda(
+            self,
+            name=f"lambda_auth_{self.suffix}",
+        )
 
         lb_request_and_increment_url_counter = utils_cdk.create_lambda(
             self,
@@ -91,6 +94,7 @@ class BackStack(Stack):
         api_gateway = utils_cdk.create_api_gateway(
             self,
             apigw_id=self.suffix,
+            lambda_auth=lambda_auth,
         )
 
         # ### API GATEWAY ROUTES ### #
