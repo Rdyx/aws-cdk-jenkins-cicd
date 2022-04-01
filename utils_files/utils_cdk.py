@@ -215,10 +215,16 @@ def create_role(
     )
 
 
-def create_s3_bucket(self, bucket_name, kms_key=None, block_public_access=None, foreign_accounts_list=None):
+def create_s3_bucket(
+    self,
+    bucket_name,
+    kms_key=None,
+    block_public_access=None,
+    foreign_accounts_list=None,
+):
     s3_cors_rule = s3.CorsRule(
         allowed_methods=[s3.HttpMethods.GET],
-        allowed_headers=["*"];
+        allowed_headers=["*"],
         allowed_origins=["*"],
     )
 
@@ -240,7 +246,7 @@ def create_s3_bucket(self, bucket_name, kms_key=None, block_public_access=None, 
                 effect=iam.Effect.ALLOW,
                 principals=[iam.AccountPrincipal(account)],
                 resources=[s3_bucket.bucket_arn, f"{s3_bucket.bucket_arn}/*"],
-                actions=["s3:*"]
+                actions=["s3:*"],
             )
             s3_bucket.add_to_resource_policy(bucket_policy)
 
