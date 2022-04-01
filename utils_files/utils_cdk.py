@@ -242,10 +242,13 @@ def create_s3_bucket(
         cors=[s3_cors_rule],
         removal_policy=cdk.RemovalPolicy.DESTROY,
         enforce_ssl=enforce_ssl,
-        public_read_access=public_read_access,
+        # public_read_access=public_read_access,
         website_index_document=website_index_document,
         website_error_document=website_error_document,
     )
+
+    if public_read_access:
+        s3_bucket.grant_public_access()
 
     # if is_public_readable:
     #     bucket_policy = iam.PolicyStatement(
