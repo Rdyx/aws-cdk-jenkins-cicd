@@ -6,6 +6,7 @@ from aws_cdk import (
     aws_dynamodb as ddb,
     aws_iam as iam,
     aws_apigateway as apigw,
+    aws_s3 as s3,
 )
 
 
@@ -212,3 +213,35 @@ def create_role(
         managed_policies=managed_policies,
         inline_policies=inline_policies,
     )
+
+
+def create_s3_bucket(self, bucket_name, kms_key=None, block_public_access=None, foreign_accounts_list=None):
+    s3_cors_rule = s3.CorsRule(
+        allowed_methods=[s3.HttpMethods.GET],
+        allowed_headers=["*"];
+        allowed_origins=["*"],
+    )
+
+    s3_bucket = s3.Bucket(
+        self,
+        id=f"S3-{bucket_name}",
+        bucket_name=bucket_name,
+        encryption_key=kms_key,
+        encryption=s3.BucketEncryption.KMS if kms_key else None,
+        block_public_access=block_public_access,
+        cors=[s3_cors_rule],
+        removal_policy=cdk.RemovalPolicy.DESTROY,
+    )
+
+    # If you want to allow another AWS account(s) to access your bucket
+    if foreign_accounts_list:
+        for account in foreign_accounts_list:
+            bucket_policy = iam.PolicyStatement(
+                effect=iam.Effect.ALLOW,
+                principals=[iam.AccountPrincipal(account)],
+                resources=[s3_bucket.bucket_arn, f"{s3_bucket.bucket_arn}/*"],
+                actions=["s3:*"]
+            )
+            s3_bucket.add_to_resource_policy(bucket_policy)
+
+    return s3_bucket
