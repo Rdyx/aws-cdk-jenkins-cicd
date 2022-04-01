@@ -218,9 +218,9 @@ def create_role(
 def create_s3_bucket(
     self,
     bucket_name,
-    enforce_ssl=True,
     kms_key=None,
     block_public_access=None,
+    enforce_ssl=None,
     public_read_access=None,
     foreign_accounts_list=None,
     website_index_document=None,
