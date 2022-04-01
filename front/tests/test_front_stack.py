@@ -15,8 +15,11 @@
 
 # # example tests. To run these tests, uncomment this file along with the example
 # # resource in aws_cdk_jenkins_cicd/aws_cdk_jenkins_cicd_stack.py
-# def test_sqs_queue_created():
-#     """Example Unit Test"""
+def test_sqs_queue_created():
+    """Example Unit Test"""
+    return True
+
+
 #     stack = FrontStack(app, f"front-{PROJECT_NAME}-{STAGE}", env=ENV)
 #     template = assertions.Template.from_stack(stack)
 
