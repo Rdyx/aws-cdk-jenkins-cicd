@@ -24,4 +24,10 @@ class FrontStack(Stack):
         )
 
         # ### S3 BUCKET ### #
-        utils_cdk.create_s3_bucket(self, f"front-{self.suffix}")
+        utils_cdk.create_s3_bucket(
+            self,
+            bucket_name=f"front-{self.suffix}",
+            is_public_readable=True,
+            website_index_document="index.html",
+            website_error_document="index.html",
+        )
