@@ -1,6 +1,7 @@
 .venv/
 .tox/
 .vscode/
+.pytest_cache/
 **/__pycache__/
 cdk.out/
 deploy-output.json
