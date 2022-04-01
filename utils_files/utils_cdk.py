@@ -221,7 +221,7 @@ def create_s3_bucket(
     enforce_ssl=True,
     kms_key=None,
     block_public_access=None,
-    is_public_readable=None,
+    public_read_access=None,
     foreign_accounts_list=None,
     website_index_document=None,
     website_error_document=None,
@@ -242,18 +242,19 @@ def create_s3_bucket(
         cors=[s3_cors_rule],
         removal_policy=cdk.RemovalPolicy.DESTROY,
         enforce_ssl=enforce_ssl,
+        public_read_access=public_read_access,
         website_index_document=website_index_document,
         website_error_document=website_error_document,
     )
 
-    if is_public_readable:
-        bucket_policy = iam.PolicyStatement(
-            effect=iam.Effect.ALLOW,
-            principals=[iam.User("*")],
-            resources=[s3_bucket.bucket_arn, f"{s3_bucket.bucket_arn}/*"],
-            actions=["s3:GetObject"],
-        )
-        s3_bucket.add_to_resource_policy(bucket_policy)
+    # if is_public_readable:
+    #     bucket_policy = iam.PolicyStatement(
+    #         effect=iam.Effect.ALLOW,
+    #         principals=[iam.User("*")],
+    #         resources=[s3_bucket.bucket_arn, f"{s3_bucket.bucket_arn}/*"],
+    #         actions=["s3:GetObject"],
+    #     )
+    #     s3_bucket.add_to_resource_policy(bucket_policy)
 
     # If you want to allow another AWS account(s) to access your bucket
     if foreign_accounts_list:
