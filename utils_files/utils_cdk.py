@@ -249,7 +249,7 @@ def create_s3_bucket(
     if is_public_readable:
         bucket_policy = iam.PolicyStatement(
             effect=iam.Effect.ALLOW,
-            principals=[iam.AccountPrincipal("*")],
+            principals=[iam.AnyPrincipal()],
             resources=[s3_bucket.bucket_arn, f"{s3_bucket.bucket_arn}/*"],
             actions=["s3:GetObject"],
         )
