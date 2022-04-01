@@ -30,4 +30,5 @@ class FrontStack(Stack):
             public_read_access=True,
             website_index_document="index.html",
             website_error_document="error.html",
+            enforce_ssl=False,
         )
