@@ -29,6 +29,3 @@ deploy:
 
 afterdeploy:
 	python3 utils_files/after_deploy/after_deploy.py
-
-clearworkspace:
-	python3 utils_files/clearworkspace/clear_workspace.py

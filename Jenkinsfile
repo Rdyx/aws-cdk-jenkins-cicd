@@ -104,9 +104,9 @@ pipeline {
                 sh "make afterdeploy"
             }
         }
-        stage('Clear Workspace') {
+        stage('Clean Workspace') {
             steps {
-                sh "make clearworkspace"
+                cleanWs()
             }
         }
     }
