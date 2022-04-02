@@ -14,7 +14,7 @@ pylint:
 		./front
 
 beforedeploy:
-	echo ""
+	python3 utils_files/before_deploy/before_deploy.py
 
 unittests:
 	python3 -m tox
