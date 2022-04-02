@@ -26,7 +26,7 @@ pipeline {
     tools {nodejs "nodejs"}
 
     environment {
-        BRANCH_ENV = "{env.BRANCH_NAME == 'develop' ? 'develop' : env.BRANCH_NAME == 'master' ? 'production' : 'none'}"
+        BRANCH_ENV = "${env.BRANCH_NAME == 'develop' ? 'develop' : env.BRANCH_NAME == 'master' ? 'production' : 'none'}"
     }
 
     stages {
