@@ -9,7 +9,7 @@ def load_conf(branch) {
             config["context"] = readJSON(file: './conf/prod_conf.json')
         default:
             config["context"] = readJSON(file: './conf/test_conf.json')
-            config["context"]["PROJECT_NAME"] += '-' + env.BRANCH_NAME.split('-')[0].split('/')[1]
+            config["context"]["STAGE"] += '-' + env.BRANCH_NAME.split('-')[0].split('/')[1]
     }
 
     env.PROJECT_NAME = config["context"]["PROJECT_NAME"]
