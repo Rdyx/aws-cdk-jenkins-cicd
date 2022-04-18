@@ -1,0 +1,10 @@
+{
+	"AWS_DEFAULT_REGION": "eu-west-3",
+	"AWS_ACCOUNT": "",
+	"PROJECT_NAME": "project-name",
+	"STAGE": "test",
+	"KMS_KEY": "jenkins",
+	"AVAILABILITY_ZONES": ["eu-west-3"],
+	"ALB_AVAILABILITY_ZONES": ["eu-west-3a", "eu-west-3b"],
+	"VPC_ID": "vpc-id"
+}

@@ -1,0 +1,34 @@
+def load_conf(branch) {
+    echo "Branch ${branch}"
+    def config = readJSON(file: './cdk.json')
+
+    config["context"] = readJSON(file: './conf/prod_conf.json')
+
+    env.AWS_DEFAULT_REGION = config["context"]["AWS_DEFAULT_REGION"]
+
+    writeJSON file:'./cdk.json', json:config, pretty: 2
+    echo readFile('./cdk.json')
+}
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                sh "pip3 install boto3 --user"
+            }
+        }
+        stage('Load Conf') {
+            steps {
+                load_conf(params.branch_id)
+            }
+        }
+        stage('Delete Environment') {
+            steps {
+                sh "python3 delete-env/delete_env.py ${params.branch_id}"
+            }
+        }
+    }
+}
